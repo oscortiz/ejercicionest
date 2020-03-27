@@ -14,6 +14,10 @@ export class LibroController {
 
     // Listado de libros, devuelve un array de Libro
     @Get()
+    async findAll(): Promise<LibroDto[]> {
+        return this.restService.getLibros();
+    }     
+    /*
     findAll(): LibroDto[] {
         // Desde el controlador, modifica el método que
         // maneja el listado (GET /) para que coja los 
@@ -21,8 +25,15 @@ export class LibroController {
         // que nos devuelve el servicio
         return this.restService.getLibros();
     }
+    */
+   
     // Añadir un libro - devuelve un Libro
     @Post()
+    async create(@Body() libroDtoSinId: LibroDtoSinId): Promise<LibroDto> {
+        const libro = await this.restService.create(libroDtoSinId);
+        return libro;
+    }
+    /*    
     addOne(@Body() createDto: LibroDtoSinId): LibroDto {
         const libroDTO = new LibroDto();
         libroDTO.id = 1;
@@ -34,8 +45,13 @@ export class LibroController {
         this.restService.addLibro(libroDTO);
         return libroDTO;
     }
+    */
     // Obtener un libro - devuelve un Libro
     @Get('/:id')
+    findOne(@Param('id') id: string): Promise<LibroDto> {
+        return this.restService.findById(id);
+    }    
+    /*
     getById(@Param() params): LibroDto {
         const libroDTO = new LibroDto();
         libroDTO.id = params.id;
@@ -44,8 +60,13 @@ export class LibroController {
         libroDTO.fecha = new Date(); 
         return libroDTO;
     }
+    */
     // Modificar un libro - devuelve un Libro
     @Put('/:id')
+    async update(@Param('id') id: string, @Body() libroDtoSinId: LibroDtoSinId): Promise<LibroDto> {
+        return this.restService.updateById(id, libroDtoSinId);
+    }
+    /*    
     modifyById(@Param() params,
                 @Body() updateDto: LibroDtoSinId): LibroDto {
         const libroDTO = new LibroDto();
@@ -55,8 +76,13 @@ export class LibroController {
         libroDTO.fecha = updateDto.fecha;         
         return libroDTO;
     }
+    */
     // Borrar un libro - devuelve un Libro
     @Delete('/:id')
+    remove(@Param('id') id: string): Promise<LibroDto> {
+        return this.restService.delete(id);
+    }    
+    /*
     deleteById(@Param() params): LibroDto {
         const libroDTO = new LibroDto();
         libroDTO.id = params.id;
@@ -65,4 +91,5 @@ export class LibroController {
         libroDTO.fecha = new Date();
         return libroDTO;
     }
+    */
 }
